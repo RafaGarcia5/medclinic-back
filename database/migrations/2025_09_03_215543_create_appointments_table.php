@@ -19,7 +19,7 @@ return new class extends Migration
 
             $table->date('date');
             $table->time('time');
-            $table->enum('status', ['active','cancelled','missed','rescheduled'])->default('active');
+            $table->string('status')->default('active');
             $table->text('medical_record')->nullable();
             $table->timestamps();
 
@@ -37,6 +37,9 @@ return new class extends Migration
                   ->references('id')->on('services')
                   ->onDelete('cascade')
                   ->onUpdate('cascade');
+
+            $table->index(['doctor_id', 'date', 'time']);
+            $table->index(['patient_id']);
         });
     }
 
